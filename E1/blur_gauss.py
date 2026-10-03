@@ -38,15 +38,15 @@ def blur_gauss(img: np.array, sigma: float) -> np.array:
     # --- gaussian filter ---
     # calculate values dependend on indices and distance to middle indice 
     middle = (k_w - 1) / 2
-    gaus_filter = 1 / (2 * math.pi * (sigma ** 2)) * np.exp(-((x - middle) ** 2 + (y - middle) ** 2) / (2 * (sigma ** 2)))
+    gauss_filter = 1 / (2 * math.pi * (sigma ** 2)) * np.exp(-((x - middle) ** 2 + (y - middle) ** 2) / (2 * (sigma ** 2)))
 
     # normalize
-    gaus_filter /= gaus_filter.sum()
+    gauss_filter /= gauss_filter.sum()
 
     # check if filter values add up to approx 1
     # print(gaus_filter.sum(axis=0).sum(axis=0))
 
-    img_blur = cv2.filter2D(img, -1, gaus_filter)
+    img_blur = cv2.filter2D(img, -1, gauss_filter)
 
     ######################################################
     return img_blur
