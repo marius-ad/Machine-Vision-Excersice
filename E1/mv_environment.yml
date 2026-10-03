@@ -1,0 +1,17 @@
+name: machinevision
+channels:
+  - conda-forge
+dependencies:
+  # Keep the course baseline until newer Python versions pass cross-platform checks.
+  - python=3.12
+  - pip
+  - numpy
+  - scipy
+  - matplotlib
+  - scikit-learn
+  - opencv
+  - pillow
+  - pyquaternion
+  - pip:
+    # Open3D <=0.18 is incompatible with NumPy 2.
+    - open3d>=0.19
