@@ -31,15 +31,22 @@ def blur_gauss(img: np.array, sigma: float) -> np.array:
     ######################################################
     # Write your own code here
     
-    kernel_width = 2 * math.ceil(3 * sigma) +1
-    print(kernel_width)
+    # dimensions of the kernel dependend on sigma
+    k_w = 2 * math.ceil(3 * sigma) +1
+    x, y = np.indices((k_w, k_w))
 
-    square_filter = np.zeros((kernel_width, kernel_width))
-    square_filter[:] = 1 / (kernel_width ** 2)
+    # --- gaussian filter ---
+    # calculate values dependend on indices and distance to middle indice 
+    middle = (k_w - 1) / 2
+    gaus_filter = 1 / (2 * math.pi * (sigma ** 2)) * np.exp(-((x - middle) ** 2 + (y - middle) ** 2) / (2 * (sigma ** 2)))
 
-    print(square_filter.sum(axis=0).sum(axis=0))
+    # normalize
+    gaus_filter /= gaus_filter.sum()
 
-    img_blur = cv2.filter2D(img, -1, square_filter)
+    # check if filter values add up to approx 1
+    # print(gaus_filter.sum(axis=0).sum(axis=0))
+
+    img_blur = cv2.filter2D(img, -1, gaus_filter)
 
     ######################################################
     return img_blur
