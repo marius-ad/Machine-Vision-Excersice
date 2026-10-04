@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     # Read image. You can change the image you want to process here.
     current_path = Path(__file__).parent
-    img_gray = cv2.imread(str(current_path.joinpath("image/circle.jpg")), cv2.IMREAD_GRAYSCALE)
+    img_gray = cv2.imread(str(current_path.joinpath("image/rubens.jpg")), cv2.IMREAD_GRAYSCALE)
     if img_gray is None:
         raise FileNotFoundError("Couldn't load image in " + str(current_path))
 
@@ -47,12 +47,14 @@ if __name__ == '__main__':
     gradients, orientations = sobel(img_blur)
     orientations_color = cv2.applyColorMap(np.uint8((orientations.copy() + np.pi) / (2 * np.pi) * 255),
                                            cv2.COLORMAP_RAINBOW)
+    orientations_color[gradients < 0.05] = 0 # edges can be better distinguished
     orientations_color = orientations_color.astype(np.float32) / 255.
     gradient_img = np.append(cv2.cvtColor(gradients, cv2.COLOR_GRAY2BGR), orientations_color, axis=1)
     show_image(gradient_img, "Gradients", save_image=save_image, use_matplotlib=matplotlib_plotting)
 
-    # # 3. Non-Maxima Suppression
-    # edges = non_max(gradients, orientations)
+    # 3. Non-Maxima Suppression
+    edges = non_max(gradients, orientations)
+    show_image(edges, "Non-maximum suppresion", save_image=save_image, use_matplotlib=matplotlib_plotting)
 
     # # 4. Hysteresis Thresholding
     # hyst_method_auto = False
