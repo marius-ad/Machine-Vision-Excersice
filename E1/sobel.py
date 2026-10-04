@@ -24,11 +24,45 @@ def sobel(img: np.array) -> (np.array, np.array):
     :rtype: Two np.arrays with shape (height, width) and dtype = np.float32
     """
     ######################################################
-    # Write your own code here
-    gradient = img.copy()     # Replace this line
-    orientation = img.copy()  # Replace this line
+    
+    # check img dtype and range
+    img = img.astype(np.float32)
+    low, high = np.min(img), np.max(img)
+    if low < 0.0 or high > 1.0:
+        img = (img - low) / (high - low) if high > low else np.zeros_like(img)
 
+    # define filter kernel
+    g_x = np.array([[-1,0,1],
+                    [-2,0,2],
+                    [-1,0,1]])
 
+    g_y = np.array([[-1,-2,-1],
+                    [0,0,0],
+                    [1,2,1]])
+
+    # horizontal edge
+    x = cv2.filter2D(img, -1, g_x)
+    # vertical edge
+    y = cv2.filter2D(img, -1, g_y)
+
+    # edge strength
+    gradient = np.sqrt(x**2 + y**2)
+
+    # angele of gradient
+    # arctan(y/x) only gives angle [-pi/2, pi/2]
+    # arctan2 shortcut for:
+    #   x > 0:          arctan(y / x)
+    #   x < 0, y >= 0:  arctan(y / x) + pi
+    #   x < 0, y < 0:   arctan(y / x) - pi
+    #   x = 0, y > 0:   pi / 2
+    #   x = 0, y < 0:  -pi / 2
+    orientation = np.arctan2(y, x)
+
+    # normalize
+    if np.max(gradient) == 0:
+        gradient = np.zeros_like(gradient)
+    else:
+        gradient /= np.max(gradient)
 
     ######################################################
     return gradient, orientation
