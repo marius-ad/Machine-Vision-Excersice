@@ -1,0 +1,28 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# Packaging and build output
+build/
+dist/
+*.egg-info/
+
+# Notebook checkpoints and editor files
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
