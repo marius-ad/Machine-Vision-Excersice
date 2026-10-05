@@ -25,11 +25,12 @@ def sobel(img: np.array) -> (np.array, np.array):
     """
     ######################################################
     
-    # check img dtype and range
+    # make sure dtype=float32 and values in range [0, 1]
     img = img.astype(np.float32)
-    low, high = np.min(img), np.max(img)
-    if low < 0.0 or high > 1.0:
-        img = (img - low) / (high - low) if high > low else np.zeros_like(img)
+    mi, ma = np.min(img), np.max(img)
+    if mi < 0.0 or ma > 1.0:
+        print("Warning: Input image is not in range [0, 1]. Normalizing it to [0, 1].")
+        img = (img - mi) / (ma - mi) if ma > mi else np.zeros_like(img)
 
     # define filter kernel
     g_x = np.array([[-1,0,1],

@@ -3,8 +3,8 @@
 
 """ Hysteresis thresholding
 
-Author: FILL IN
-MatrNr: FILL IN
+Author: Marius Adamske
+MatrNr: 12618651
 """
 
 import cv2
@@ -38,10 +38,20 @@ def hyst_thresh(edges_in: np.array, low: float, high: float) -> np.array:
     :rtype: np.array with shape (height, width) with dtype = np.float32 and values either 0 or 1
     """
     ######################################################
-    # Write your own code here
-    bitwise_img = edges_in.copy()  # Replace this line
+  
+    # compute binary image of pixels above low/high threshold
+    edges_low = np.where(edges_in > low, 1, 0).astype(np.uint8)
+    edges_high = edges_in > high
 
+    # compute connected components of edges_low, 
+    # output of cv2.connectedComponents is a tuple (num_labels, labels)
+    num_labels, labels = cv2.connectedComponents(edges_low, connectivity=8)
 
+    # find connected components that contain at least one pixel above high threshold
+    labels_high = np.where(labels * edges_high > 0, labels, 0)
+
+    # create binary image of edges that are connected to a pixel above high threshold
+    bitwise_img = np.isin(labels, labels_high[labels_high > 0]).astype(np.float32)
 
     ######################################################
     return bitwise_img
