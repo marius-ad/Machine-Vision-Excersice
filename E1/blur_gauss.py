@@ -3,8 +3,8 @@
 
 """ Blur the input image with Gaussian filter kernel
 
-Author: FILL IN
-MatrNr: FILL IN
+Author: Marius Adamske
+MatrNr: 12618651
 """
 
 import cv2

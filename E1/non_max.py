@@ -3,8 +3,8 @@
 
 """ Non-Maxima Suppression
 
-Author: FILL IN
-MatrNr: FILL IN
+Author: Marius Adamske
+MatrNr: 12618651
 """
 
 import cv2
