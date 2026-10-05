@@ -1,0 +1,7 @@
+mit steigendem sigma deutlich mehr unschärfe
+
+k_w_sigma = 2 * ceil(3*sigma)+1
+
+bei k_w < k_w_sigma: deutlich reduzierte unschärfe
+
+bei k_w > k_w_sigma: keine aenderung mehr in der unschärfe

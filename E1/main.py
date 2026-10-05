@@ -12,6 +12,7 @@ Tutors: machinevision@acin.tuwien.ac.at
 from pathlib import Path
 
 import cv2
+import math
 import numpy as np
 
 from blur_gauss import blur_gauss
@@ -41,8 +42,9 @@ if __name__ == '__main__':
     sigma = 3  # Change this value
     img_blur = blur_gauss(img_gray, sigma)
     show_image(img_blur, "Blurred Image", save_image=save_image, use_matplotlib=matplotlib_plotting)
+    #plot_row_intensities(img_blur, row=img_blur.shape[0]//2, title="Row Intensities of Blurred Image", save_image=False)
 
-    
+
     # 2. Edge Detection
     gradients, orientations = sobel(img_blur)
     orientations_color = cv2.applyColorMap(np.uint8((orientations.copy() + np.pi) / (2 * np.pi) * 255),
@@ -57,11 +59,11 @@ if __name__ == '__main__':
     show_image(edges, "Non-maximum suppresion", save_image=save_image, use_matplotlib=matplotlib_plotting)
 
     # 4. Hysteresis Thresholding
-    hyst_method_auto = True
+    hyst_method_auto = False
     if hyst_method_auto:
         canny_edges = hyst_thresh_auto(edges, 0.7, 0.3)
     else:
-        canny_edges = hyst_thresh(edges, 0.3, 0.4)
+        canny_edges = hyst_thresh(edges, 0.1, 0.2)
     show_image(canny_edges, "Canny Edges", save_image=save_image, use_matplotlib=matplotlib_plotting)
 
     # Overlay the found edges in red over the original image
