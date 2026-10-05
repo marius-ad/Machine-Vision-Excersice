@@ -3,8 +3,8 @@
 
 """ Automatic hysteresis thresholding
 
-Author: FILL IN
-MatrNr: FILL IN
+Author: Marius Adamske
+MatrNr: 12618651
 """
 
 import cv2
@@ -42,9 +42,14 @@ def hyst_thresh_auto(edges_in: np.array, low_prop: float, high_prop: float) -> n
     """
     ######################################################
     # Write your own code here
-    hyst_out = edges_in.copy()  # Replace this line
+    # Calculate the low and high thresholds based on the proportions
+    low_threshold = np.percentile(edges_in[edges_in > 0], (1 - low_prop) * 100)
+    high_threshold = np.percentile(edges_in[edges_in > 0], (1 - high_prop) * 100)
 
+    print(low_threshold, high_threshold)
 
+    # run hysteresis thresholding with the calculated thresholds
+    hyst_out = hyst_thresh(edges_in, low_threshold, high_threshold)
 
     ######################################################
     return hyst_out

@@ -57,7 +57,7 @@ if __name__ == '__main__':
     show_image(edges, "Non-maximum suppresion", save_image=save_image, use_matplotlib=matplotlib_plotting)
 
     # 4. Hysteresis Thresholding
-    hyst_method_auto = False
+    hyst_method_auto = True
     if hyst_method_auto:
         canny_edges = hyst_thresh_auto(edges, 0.7, 0.3)
     else:
