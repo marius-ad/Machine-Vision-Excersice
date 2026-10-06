@@ -33,6 +33,7 @@ def blur_gauss(img: np.array, sigma: float) -> np.array:
     
     # dimensions of the kernel dependend on sigma
     k_w = 2 * math.ceil(3 * sigma) +1
+    #k_w = 19 #for testing
     x, y = np.indices((k_w, k_w))
 
     # gaussian filter

@@ -43,10 +43,16 @@ def hyst_thresh_auto(edges_in: np.array, low_prop: float, high_prop: float) -> n
     ######################################################
     # Write your own code here
     # Calculate the low and high thresholds based on the proportions
+
+    # Check if there are any non-zero edge pixels  
+    if np.count_nonzero(edges_in) == 0:
+        return np.zeros_like(edges_in, dtype=np.float32)
+
+    # Calculate low, high thresholds based low_prop, high_prop   
     low_threshold = np.percentile(edges_in[edges_in > 0], (1 - low_prop) * 100)
     high_threshold = np.percentile(edges_in[edges_in > 0], (1 - high_prop) * 100)
 
-    print(low_threshold, high_threshold)
+    #print(low_threshold, high_threshold)
 
     # run hysteresis thresholding with the calculated thresholds
     hyst_out = hyst_thresh(edges_in, low_threshold, high_threshold)

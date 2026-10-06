@@ -38,10 +38,17 @@ if __name__ == '__main__':
     img_gray = img_gray.astype(np.float32) / 255.
     #show_image(img_gray, "Original Image", save_image=save_image, use_matplotlib=matplotlib_plotting)
 
+    # test gaussian noise
+    np.random.seed(1160)
+    img_gray = add_gaussian_noise(img_gray, mean=0, sigma=0.1)
+
+
     # 1. Blur Image
     sigma = 3  # Change this value
     img_blur = blur_gauss(img_gray, sigma)
     show_image(img_blur, "Blurred Image", save_image=save_image, use_matplotlib=matplotlib_plotting)
+
+    # test - plotting of row intensities of blurred image
     #plot_row_intensities(img_blur, row=img_blur.shape[0]//2, title="Row Intensities of Blurred Image", save_image=False)
 
 
@@ -63,7 +70,7 @@ if __name__ == '__main__':
     if hyst_method_auto:
         canny_edges = hyst_thresh_auto(edges, 0.7, 0.3)
     else:
-        canny_edges = hyst_thresh(edges, 0.1, 0.2)
+        canny_edges = hyst_thresh(edges, 0.06, 0.1)
     show_image(canny_edges, "Canny Edges", save_image=save_image, use_matplotlib=matplotlib_plotting)
 
     # Overlay the found edges in red over the original image
